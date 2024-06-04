@@ -1,0 +1,21 @@
+services:
+  stats:
+    image: node:21
+    environment:
+      #PAT_1: "YOUR_GITHUB_TOKEN"
+      PORT: 9000
+    command: "node express.js"
+    working_dir: "/app"
+    volumes:
+      - "./:/app"
+    ports:
+      - 9000:9000
+    depends_on:
+      stats-init:
+        condition: service_completed_successfully
+  stats-init:
+    image: node:21
+    command: "npm install"
+    working_dir: "/app"
+    volumes:
+      - "./:/app"
